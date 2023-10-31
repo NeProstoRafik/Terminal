@@ -7,8 +7,8 @@
         @if (Model.parameter_name1 != null)
         {
             <div class="col">
-                <div class="col">
-                    <label >@Model.parameter_name1</label>
+                <div class ="form-group d-flex">
+                    <label class="mr-3">@Model.parameter_name1</label>
                 </div>
                 <div class="col">
                     <input asp-for="@Model.parameter_default_value1" class="form-control" type="number" min="0" />
@@ -18,9 +18,9 @@
 
         @if (Model.parameter_name2 != null)
         {
-            <div class="col">
-                <div class="col">
-                    <label>@Model.parameter_name2</label>
+            <div class="col" >
+                <div class="form-group d-flex">
+                    <label class="mr-3">@Model.parameter_name2</label>
                 </div>
                 <div class="col">
                     <input asp-for="@Model.parameter_default_value2" class="form-control" type="number" min="0" />
@@ -28,10 +28,10 @@
             </div>
         }
         @if (Model.parameter_name3 != null)
-        {          
-            <div class="col">
-                <div class="col">
-                    <label>@Model.parameter_name3</label>
+        {
+            <div class="col" >
+                <div class="form-group d-flex">
+                    <label class="mr-3">@Model.parameter_name3</label>
                 </div>
                 <div class="col">
     
