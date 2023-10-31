@@ -1,0 +1,155 @@
+﻿@using Terminal.Service;
+@model List<TerminalProcedures>;
+@{
+    int index = 0;
+}
+<div class="container">
+    <div class="row" style="height: 50px; background-color:darkslategrey" >
+        <div class="col" style="padding-top: 10px;">
+            <span class="text-white"> TerminaL</span>
+        </div>
+        <div class="col-8" style="padding-top: 10px;">
+            <span class="text-white" border w-100 ;>Личный кабинет- Отправка команды на терминал</span>
+        </div>
+        <div class="col" style="padding-top: 10px;">
+            <span class="text-white" border w-100 ;>Партнер</span>
+        </div>        
+  
+    </div>
+    <div class="row" >
+        <div class="col" style="border-right: 1px solid black;">
+            <ul style="padding-left: 20px;">
+                <li style="margin-bottom: 15px; font-weight: bold;">Клиенты</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Пользователи</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Терминалы</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">TiD Банка</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Транзакции</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Логи терминалов</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Кассы</li>
+                <li style="margin-bottom: 15px; font-weight: bold;">Привязать терминалы к клиенту списком</li>
+            </ul>
+        </div>
+        <div class="col-10" style="margin-left: 15px;">
+            <h7>Отправка команды на терминал</h7>
+            <form method="post" asp-action="Index">
+                
+                <div style="background-color:gainsboro;">
+            <div class="row"  >
+
+                        <div class="col-4" style="margin-left: 15px;">
+                            <div class="col" >
+                            <label style="margin-bottom: 5px; font-weight: bold;">ID Терминала(ов)</label>
+                        </div>
+                        <div class="col">                        
+                           @* <textarea name="IdTerminal"  class="form-control"> </textarea>*@
+                                <input name="IdTerminal" class="form-control" type="number" style="height: 100px;" />
+                        </div>
+                     
+                  </div>
+
+                <div class="col-6" >
+                       <label style="margin-bottom: 5px; font-weight: bold;">Команда</label>
+                 
+                    <div class="col">
+                              
+                                <select style="width: 80%;" id="mySelect" name="Command" class="form-control">
+                                @if (ViewBag.Values==null)
+                                {
+                                    <option disabled selected>Выберите команду</option>
+                                }
+                                else
+                                {
+                                    <option disabled selected>Выберите команду</option>
+                                       
+                                    @foreach (var value in ViewBag.Values)
+                                        {
+                                        <option style="white-space: break-spaces;">@value.name</option>
+                                            
+                                        }
+                                }
+                            </select>    
+                      
+                    </div>
+              
+                 </div>
+                        <div id="updateSection" style="margin-left: 15px; width: 97%;">
+
+                 </div>
+            </div>
+
+
+                    <div class="d-flex justify-content-center align-items-center" style="margin-top: 30px;">
+                <div >
+                        <a asp-action="Index" class="btn btn-success w-100">Назад</a>                 
+          
+                </div>
+                <div>
+                        <button class="btn btn-primary">Отправить</button>
+                </div>
+            </div>
+       
+                </div>
+            </form>
+            <table class="table table-striped">
+                <thead style="background-color:black">
+                    <tr>
+                        <th class="col-1" style="text-align: center; color:white">#</th>
+                        <th class="col-1" style="text-align: center;color:white">Дата и время</th>
+                        <th class="col-4" style="text-align: center; color:white">Команда</th>
+                        <th class="col-1" style="text-align: center; color:white">Параметр 1</th>
+                        <th class="col-1" style="text-align: center; color:white">Параметр 2</th>
+                        <th class="col-1" style="text-align: center; color:white">Параметр 3</th>
+                        <th class="col-3" style="text-align: center; color:white">Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    
+                     @if(Model!=null)
+                        {
+                            @foreach (var value in Model) 
+                        {
+                                index++;
+                                <tr>
+                                <td>@index</td>
+                                <td style="text-align: center; ">@value.DateCreated</td>
+                                <td style="text-align: center; ">@value.Command</td>
+                                <td style="text-align: center; ">@value.Parameter1</td>
+                                <td style="text-align: center; ">@value.Parameter2</td>
+                                <td style="text-align: center; ">@value.Parameter3</td>
+                                <td style="text-align: center; ">@value.Status</td>
+                            </tr>
+
+                            }
+                        }
+                      
+                      </tr>                   
+                </tbody>
+            </table>
+        </div>      
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        $('#mySelect').on('change', function () {
+            var selectedValue = $(this).val();
+
+            $.ajax({
+                    url: '/Home/Index', 
+                type: 'POST',
+                data: { selectedValue: selectedValue },
+                success: function (result) {
+                    
+                    $('#updateSection').html(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
+}

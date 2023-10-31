@@ -1,0 +1,43 @@
+﻿@model AllCommandVM;
+<div class="row" id="updateSection">
+   
+    <input asp-for="@Model.Id" class="form-control" hidden />
+    @if (Model != null)
+    {
+        @if (Model.parameter_name1 != null)
+        {
+            <div class="col">
+                <div class="col">
+                    <label >@Model.parameter_name1</label>
+                </div>
+                <div class="col">
+                    <input asp-for="@Model.parameter_default_value1" class="form-control" type="number" min="0" />
+                </div>
+            </div>
+        }
+
+        @if (Model.parameter_name2 != null)
+        {
+            <div class="col">
+                <div class="col">
+                    <label>@Model.parameter_name2</label>
+                </div>
+                <div class="col">
+                    <input asp-for="@Model.parameter_default_value2" class="form-control" type="number" min="0" />
+                </div>
+            </div>
+        }
+        @if (Model.parameter_name3 != null)
+        {          
+            <div class="col">
+                <div class="col">
+                    <label>@Model.parameter_name3</label>
+                </div>
+                <div class="col">
+    
+                    <input asp-for="@Model.parameter_default_value3" class="form-control" type="number" min="0" />
+                </div>
+            </div>
+        }
+    }
+</div>
