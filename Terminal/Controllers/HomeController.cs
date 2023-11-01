@@ -25,31 +25,33 @@ namespace Terminal.Controllers
             ViewBag.Values = await _getAllCommand.GetAllCommandsAsync();
             var listProceduresVM = new List<TerminalProcedures>();
             listProceduresVM = _terminalService.GetAllProcedure();
-     
+
             return View(listProceduresVM);
         }
         [HttpPost]
-        public async Task<IActionResult> Index(string selectedValue, TerminalProceduresVM proceduresVM)
+        public async Task<IActionResult> Index(string selectedValue, string Commandi, TerminalProceduresVM proceduresVM)
         {
-            var listProceduresVM = new List<TerminalProcedures>();
-    
+
             if ((selectedValue == null && proceduresVM.IdTerminal == 0) || (proceduresVM.Command == null && proceduresVM.IdTerminal != 0))
             {
                 return RedirectToAction("Index");
             }
             if (proceduresVM.IdTerminal != 0)
             {
+                var listProceduresVM = new List<TerminalProcedures>();
+                proceduresVM.Command = TempData["M"].ToString();
                 await _terminalService.AddProcedure(proceduresVM);
 
                 listProceduresVM = _terminalService.GetAllProcedure();
                 await _requestForTerminal.PostCommand(proceduresVM.IdTerminal, proceduresVM.Id);
-                TempData["N"] = proceduresVM.IdTerminal;
-              
+                TempData["Numb"] = proceduresVM.IdTerminal;
+
                 return RedirectToAction("Index", listProceduresVM);
             }
             var listCommand = await _getAllCommand.GetAllCommandsAsync();
-            var command = listCommand.FirstOrDefault(x => x.name.TrimStart('\n').Contains(selectedValue));
 
+            var command = listCommand.FirstOrDefault(x => x.Id == selectedValue);
+            TempData["M"] = command.name;
             ViewBag.Values = command;
             var commandVM = new AllCommandVM
             {

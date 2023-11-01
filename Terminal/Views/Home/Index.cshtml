@@ -1,8 +1,19 @@
 ﻿@using Terminal.Service;
 @model List<TerminalProcedures>;
 @{
-  
-    int numberId = Convert.ToInt32(TempData["N"]);
+   
+    var numb = TempData["Numb"];
+    int numberId = 0;
+    if (numb!=null)
+    {
+        var b = int.TryParse(numb.ToString(), out var number);
+      
+        if (b == true)
+        {
+            numberId = int.Parse(TempData["Numb"].ToString());
+        }
+    }
+    
     int index = 0;
 }
 <div class="container">
@@ -44,7 +55,7 @@
                         </div>
                         <div class="col">                        
                            @* <textarea name="IdTerminal"  class="form-control"> </textarea>*@
-                                <input name="IdTerminal" class="form-control" type="number" style="height: 100px;" value="@numberId" />
+                                <input name="IdTerminal" class="form-control" type="number" style="height: 100px;" value="@numberId" min="0" />
           
                         </div>
                      
@@ -55,7 +66,7 @@
                  
                     <div class="col">
                               
-                                <select style="width: 80%;" id="mySelect" name="Command" class="form-control">
+                                <select style="width: 80%;" id="mySelect" name="Command" class="form-control" >
                                 @if (ViewBag.Values==null)
                                 {
                                         <option disabled selected>Выберите команду</option>
@@ -66,14 +77,15 @@
                                        
                                     @foreach (var value in ViewBag.Values)
                                         {
-                                            <option style="white-space: break-spaces;">@value.name</option>
+                                            <option value="@value.Id" style="white-space: break-spaces;">@value.name</option>
                                             
                                         }
                                 }
-                            </select>    
-                      
-                    </div>
-              
+                            </select>
+                         
+                    </div>                                            
+
+
                  </div>
                         <div id="updateSection" style="margin-left: 15px; width: 97%;">
 
@@ -110,10 +122,11 @@
                     
                      @if(Model!=null)
                         {
-                            @foreach (var value in Model) 
-                        {
+                           @foreach (var value in Model) 
+                              {
+                                
                                 index++;
-                                <tr>
+                              <tr>
                                 <td>@index</td>
                                 <td style="text-align: center; ">@value.DateCreated</td>
                                 <td style="text-align: center; ">@value.Command</td>
@@ -121,9 +134,9 @@
                                 <td style="text-align: center; ">@value.Parameter2</td>
                                 <td style="text-align: center; ">@value.Parameter3</td>
                                 <td style="text-align: center; ">@value.Status</td>
-                            </tr>
+                              </tr>
 
-                            }
+                              }
                         }
                       
                       </tr>                   
@@ -138,8 +151,7 @@
 <script>
     $(document).ready(function () {
         $('#mySelect').on('change', function () {
-            var selectedValue = $(this).val();
-
+            var selectedValue = $(this).val();             
             $.ajax({
                     url: '/Home/Index', 
                 type: 'POST',
@@ -155,5 +167,5 @@
         });
     });
 </script>
-   
+      
 }

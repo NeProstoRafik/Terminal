@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using Terminal.Models;
 
 namespace Terminal.Handlers
@@ -17,19 +16,19 @@ namespace Terminal.Handlers
         {
             string upload = _configuration["ApiCommandDirectory"];
             string token = _configuration["Token"];
-            if (upload == null || token==null)
+            if (upload == null || token == null)
             {
                 return null;
             }
-     
+
             string url = upload + token;
-         
+
             HttpClient client = new HttpClient();
             try
             {
                 var result = await client.GetStringAsync(url);
                 var response = JsonConvert.DeserializeObject<Root>(result);
-                 return response.items;                
+                return response.items;
             }
             catch (Exception x)
             {
@@ -38,6 +37,6 @@ namespace Terminal.Handlers
             }
 
         }
-      
+
     }
 }

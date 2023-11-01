@@ -1,13 +1,14 @@
 ﻿@model AllCommandVM;
-<div class="row" id="updateSection">
+<div class="row display: flex ;" id="updateSection">
    
     <input asp-for="@Model.Id" class="form-control" hidden />
+
     @if (Model != null)
     {
         @if (Model.parameter_name1 != null)
         {
             <div class="col">
-                <div class ="form-group d-flex">
+                <div class="col">
                     <label class="mr-3">@Model.parameter_name1</label>
                 </div>
                 <div class="col">
@@ -19,7 +20,7 @@
         @if (Model.parameter_name2 != null)
         {
             <div class="col" >
-                <div class="form-group d-flex">
+                <div class="col">
                     <label class="mr-3">@Model.parameter_name2</label>
                 </div>
                 <div class="col">
@@ -30,7 +31,7 @@
         @if (Model.parameter_name3 != null)
         {
             <div class="col" >
-                <div class="form-group d-flex">
+                <div class="col">
                     <label class="mr-3">@Model.parameter_name3</label>
                 </div>
                 <div class="col">

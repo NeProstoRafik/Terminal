@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using Terminal.Models;
 
 namespace Terminal.DAL
@@ -8,8 +7,7 @@ namespace Terminal.DAL
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            //  Database.EnsureDeleted();
-            Database.EnsureCreated();
+
         }
 
         public DbSet<TerminalProcedures> TerminalProcedures { get; set; }
